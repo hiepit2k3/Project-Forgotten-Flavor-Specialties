@@ -100,7 +100,7 @@ $(document).ready(function () {
 
     try {
       $.ajax({
-        url: `${window.domain_backend}/user/register`,
+        url: `${window.domain_backend}/register`,
         type: "POST",
         contentType: "application/json", // Gửi dữ liệu dưới dạng JSON
         data: JSON.stringify({
