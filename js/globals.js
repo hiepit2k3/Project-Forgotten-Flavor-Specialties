@@ -1,2 +1,2 @@
-window.domain_backend = 'https://shop-i74ykiu2x-pham-song-hieps-projects.vercel.app/api'
-window.domain_frontend = 'http://localhost:5500/'
+window.domain_backend = 'https://shop-orcin-two.vercel.app/api'
+window.domain_frontend = 'dacsanquehuong.netlify.app'

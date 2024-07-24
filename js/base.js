@@ -105,6 +105,7 @@ $(document).ready(function () {
         contentType: "application/json", // Gửi dữ liệu dưới dạng JSON
         data: JSON.stringify({
           username: username,
+          fullname: fullname,
           password: password,
         }),
         success: function (response) {
