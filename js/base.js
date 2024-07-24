@@ -89,9 +89,10 @@ $(document).ready(function () {
     event.preventDefault();
     var fullname = $("#fullname").val();
     var username = $("#username").val();
-    var email = $("#email").val();
     var password = $("#password").val();
     var confirmpassword = $("#confirmpassword").val();
+
+    console.log(username);
 
     if (password != confirmpassword) {
       toastr.error("Mật khẩu không trùng khớp!");
