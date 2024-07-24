@@ -121,5 +121,29 @@ $(document).ready(function () {
     } catch (e) {
       toastr.error("Tài khoản hoặc mật khẩu không đúng!");
     }
-  });
-});
+
+    function getCookie(name) {
+        var nameEQ = name + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+        }
+        return null;
+    }
+
+
+
+    function checklogin() {
+        if (getCookie('ga') != null) {
+            console.log(`${window.domain_frontend}index.html`);
+            // window.location.href = `${window.domain_frontend}index.html`
+        } else {
+            window.location.href = `${window.domain_frontend}login.html`
+        }
+    }
+    //
+    // checklogin();
+  })
+})
