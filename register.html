@@ -155,25 +155,20 @@
     <div class="container-fluid !direction !spacing">
         <div class="container">
             <div class="row d-flex justify-content-center">
-                <form id="login_form" class="form" method="post">
-                    <p class="form-title">Sign in to your account</p>
-                    <div class="input-container">
-                        <input type="text" name="username" id="username" placeholder="Enter email">
-                        <span>
-                        </span>
+                <div class="login">
+                    <div class="hader">
+                        <span>Tham gia ngay hôm nay!</span>
                     </div>
-                    <div class="input-container">
-                        <input type="password" name="password" id="password" placeholder="Enter password">
-                    </div>
-                    <button type="submit" class="submit">
-                        Sign in
-                    </button>
-
-                    <p class="signup-link">
-                        No account?
-                        <a href="">Sign up</a>
-                    </p>
-                </form>
+                    <form id="form_register">
+                        <input type="text" name="fullname" placeholder="Họ và tên" required="" />
+                        <input type="text" name="username" placeholder="Tên tài khoản" required="" />
+                        <input type="email" name="email" placeholder="Email" required="" />
+                        <input type="password" name="password" placeholder="Mật khẩu" required="" />
+                        <input type="password" name="confirmpassword" placeholder="Xác nhận mật khẩu" required="" />
+                        <input type="submit" value="Signup" />
+                        <span> Đã có tài khoản? <a href="#">Đăng nhập ngay</a></span>
+                    </form>
+                </div>
 
             </div>
         </div>
