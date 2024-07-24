@@ -18,7 +18,7 @@ $(document).ready(function () {
           if (response.status_code === 200) {
             toastr.success("Đăng nhập thành công!");
             setCookieMinutes("ga", response.data.access_token, 15);
-            window.location.href = "https://dacsanquehuong.netlify.app";
+            window.location.href = "https://dacsanquehuong.netlify.app/index.html";
           }
         },
         error: function (xhr, status, error) {
