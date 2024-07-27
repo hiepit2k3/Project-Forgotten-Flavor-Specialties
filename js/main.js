@@ -26,20 +26,20 @@
             } else {
                 $('.fixed-top').removeClass('shadow').css('top', 0);
             }
-        } 
+        }
     });
-    
-    
-   // Back to top button
-   $(window).scroll(function () {
-    if ($(this).scrollTop() > 300) {
-        $('.back-to-top').fadeIn('slow');
-    } else {
-        $('.back-to-top').fadeOut('slow');
-    }
+
+
+    // Back to top button
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 300) {
+            $('.back-to-top').fadeIn('slow');
+        } else {
+            $('.back-to-top').fadeOut('slow');
+        }
     });
     $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        $('html, body').animate({ scrollTop: 0 }, 1500, 'easeInOutExpo');
         return false;
     });
 
@@ -52,27 +52,27 @@
         dots: true,
         loop: true,
         margin: 25,
-        nav : true,
-        navText : [
+        nav: true,
+        navText: [
             '<i class="bi bi-arrow-left"></i>',
             '<i class="bi bi-arrow-right"></i>'
         ],
         responsiveClass: true,
         responsive: {
-            0:{
-                items:1
+            0: {
+                items: 1
             },
-            576:{
-                items:1
+            576: {
+                items: 1
             },
-            768:{
-                items:1
+            768: {
+                items: 1
             },
-            992:{
-                items:2
+            992: {
+                items: 2
             },
-            1200:{
-                items:2
+            1200: {
+                items: 2
             }
         }
     });
@@ -86,27 +86,27 @@
         dots: true,
         loop: true,
         margin: 25,
-        nav : true,
-        navText : [
+        nav: true,
+        navText: [
             '<i class="bi bi-arrow-left"></i>',
             '<i class="bi bi-arrow-right"></i>'
         ],
         responsiveClass: true,
         responsive: {
-            0:{
-                items:1
+            0: {
+                items: 1
             },
-            576:{
-                items:1
+            576: {
+                items: 1
             },
-            768:{
-                items:2
+            768: {
+                items: 2
             },
-            992:{
-                items:3
+            992: {
+                items: 3
             },
-            1200:{
-                items:4
+            1200: {
+                items: 4
             }
         }
     });
@@ -146,6 +146,92 @@
         }
         button.parent().parent().find('input').val(newVal);
     });
+
+    // Product loading
+    $(document).ready(function () {
+        let productList = $('#product-list');
+        try {
+            $.ajax({
+                url: `${window.domain_backend}/product`,
+                type: "GET",
+                success: function (response) {
+                    console.log(response.data.data_result);
+                    let products = response.data.data_result;
+                    // Lặp qua các sản phẩm và thêm vào HTML
+                    products.forEach(product => {
+                        let productHTML = `
+                        <div class="col-md-6 col-lg-4 col-xl-3">
+                            <div class="rounded position-relative fruite-item">
+                                <div class="fruite-img">
+                                    <img src="${product.image}" class="img-fluid w-100 rounded-top" alt="">
+                                </div>
+                                <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
+                                    Fruits
+                                </div>
+                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                    <h4>${product.name}</h4>
+                                    <p>${product.description}</p>
+                                    <div class="d-flex justify-content-between flex-lg-wrap">
+                                        <p class="text-dark fs-5 fw-bold mb-0">$${product.price} / kg</p>
+                                        <button data-id="${product.id}" class="clickable-addcart btn border border-secondary rounded-pill px-3 text-primary">
+    <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
+</button>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                        // Thêm sản phẩm vào danh sách
+                        productList.append(productHTML);
+                    });
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("Không có dữ liệu!");
+                },
+            });
+        } catch (e) {
+            toastr.error("Máy chủ bị lỗi!");
+        }
+    });
+
+    $(document).ready(function () {
+        $(document).on('click', '.clickable-addcart', function () {
+            var productId = $(this).data('id');
+            console.log(productId);
+            var product = {
+                id: productId,
+                name: $(this).closest('.fruite-item').find('h4').text(),
+                description: $(this).closest('.fruite-item').find('p').first().text(),
+                price: $(this).closest('.fruite-item').find('.fs-5').text().replace('$', '').replace(' / kg', ''),
+                image: $(this).closest('.fruite-item').find('img').attr('src'),
+                quantity: 1
+            };
+
+            // Lấy giỏ hàng hiện tại từ Local Storage
+            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+            // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
+            var existingProduct = cart.find(item => item.id == productId);
+
+            if (existingProduct) {
+                // Nếu sản phẩm đã tồn tại, tăng quantity lên 1
+                existingProduct.quantity += 1;
+                console.log("Product quantity updated:", existingProduct);
+            } else {
+                // Nếu sản phẩm chưa tồn tại, thêm sản phẩm vào giỏ hàng
+                cart.push(product);
+                console.log("Product added to cart:", product);
+            }
+
+            // Lưu giỏ hàng mới vào Local Storage
+            localStorage.setItem('cart', JSON.stringify(cart));
+        });
+    });
+
+
+
 
 })(jQuery);
 

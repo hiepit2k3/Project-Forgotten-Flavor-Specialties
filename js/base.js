@@ -1,151 +1,158 @@
 $(document).ready(function () {
-  $("#login_form").on("submit", function (event) {
-    event.preventDefault();
+    $("#login_form").on("submit", function (event) {
+        event.preventDefault();
 
-    var username = $("#username").val();
-    var password = $("#password").val();
-    try {
-      $.ajax({
-        url: `${window.domain_backend}/login`,
-        type: "POST",
-        contentType: "application/json", // Gửi dữ liệu dưới dạng JSON
-        data: JSON.stringify({
-          username: username,
-          password: password,
-        }),
-        success: function (response) {
-          console.log(response);
-          if (response.status_code === 200) {
-            toastr.success("Đăng nhập thành công!");
-            setCookieMinutes("ga", response.data.access_token, 15);
-            window.location.href = "https://dacsanquehuong.netlify.app/index.html";
-          }
-        },
-        error: function (xhr, status, error) {
-          toastr.error("Tài khoản hoặc mật khẩu không đúng!");
-        },
-      });
-    } catch (e) {
-      toastr.error("Tài khoản hoặc mật khẩu không đúng!");
-    }
-  });
-
-  function checklogin() {
-    if (getCookie("ga") != null) {
-      // Nếu không phải trang index.html thì chuyển hướng
-      if (window.location.pathname !== "/index.html") {
-        // Kiểm tra flag để ngăn chuyển hướng liên tục
-        if (!localStorage.getItem("redirectedToIndex")) {
-          localStorage.setItem("redirectedToIndex", "true");
-          window.location.href = `${window.domain_frontend}index.html`;
+        var username = $("#username").val();
+        var password = $("#password").val();
+        try {
+            $.ajax({
+                url: `${window.domain_backend}/login`,
+                type: "POST",
+                contentType: "application/json", // Gửi dữ liệu dưới dạng JSON
+                data: JSON.stringify({
+                    username: username,
+                    password: password,
+                }),
+                success: function (response) {
+                    console.log(response);
+                    if (response.status_code === 200) {
+                        toastr.success("Đăng nhập thành công!");
+                        setCookieMinutes("ga", response.data.access_token, 15);
+                        window.location.href = "https://dacsanquehuong.netlify.app/index.html";
+                    }
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("Tài khoản hoặc mật khẩu không đúng!");
+                },
+            });
+        } catch (e) {
+            toastr.error("Tài khoản hoặc mật khẩu không đúng!");
         }
-      }
-    } else {
-      // Nếu không phải trang login.html thì chuyển hướng
-      if (window.location.pathname !== "/login.html") {
-        // Kiểm tra flag để ngăn chuyển hướng liên tục
-        if (!localStorage.getItem("redirectedToLogin")) {
-          localStorage.setItem("redirectedToLogin", "true");
-          window.location.href = `${window.domain_frontend}login.html`;
+    });
+
+    function checklogin() {
+        if (getCookie("ga") != null) {
+            // Nếu không phải trang index.html thì chuyển hướng
+            if (window.location.pathname !== "/index.html") {
+                // Kiểm tra flag để ngăn chuyển hướng liên tục
+                if (!localStorage.getItem("redirectedToIndex")) {
+                    localStorage.setItem("redirectedToIndex", "true");
+                    window.location.href = `${window.domain_frontend}index.html`;
+                }
+            }
+        } else {
+            // Nếu không phải trang login.html thì chuyển hướng
+            if (window.location.pathname !== "/login.html") {
+                // Kiểm tra flag để ngăn chuyển hướng liên tục
+                if (!localStorage.getItem("redirectedToLogin")) {
+                    localStorage.setItem("redirectedToLogin", "true");
+                    window.location.href = `${window.domain_frontend}login.html`;
+                }
+            }
         }
-      }
-    }
-  }
-
-  // Function to set a cookie with an expiration time in minutes
-  function setCookieMinutes(name, value, minutes) {
-    var expires = "";
-    if (minutes) {
-      var date = new Date();
-      date.setTime(date.getTime() + minutes * 60 * 1000);
-      expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
-  }
-
-  function setCookieDays(name, value, days) {
-    var expires = "";
-    if (days) {
-      var date = new Date();
-      date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
-      expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
-  }
-
-  function getCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(";");
-    for (var i = 0; i < ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) === " ") c = c.substring(1, c.length);
-      if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-    }
-    return null;
-  }
-
-  // đăng ký tài khoản
-  $("#form_register").on("submit", function (event) {
-    event.preventDefault();
-    var fullname = $("#fullname").val();
-    var username = $("#username").val();
-    var password = $("#password").val();
-    var confirmpassword = $("#confirmpassword").val();
-
-    console.log(username);
-
-    if (password != confirmpassword) {
-      toastr.error("Mật khẩu không trùng khớp!");
-      return 0;
     }
 
-    try {
-      $.ajax({
-        url: `${window.domain_backend}/register`,
-        type: "POST",
-        contentType: "application/json", // Gửi dữ liệu dưới dạng JSON
-        data: JSON.stringify({
-          username: username,
-          fullname: fullname,
-          password: password,
-        }),
-        success: function (response) {
-          console.log(response);
-          if (response.status_code === 201) {
-            toastr.success("Đăng ký thành công!");
-            window.location.href = `${window.domain_frontend}index.html`;
-          }
-        },
-        error: function (xhr, status, error) {
-          toastr.error("Tài khoản hoặc mật khẩu không đúng!");
-        },
-      });
-    } catch (e) {
-      toastr.error("Tài khoản hoặc mật khẩu không đúng!");
+    // Function to set a cookie with an expiration time in minutes
+    function setCookieMinutes(name, value, minutes) {
+        var expires = "";
+        if (minutes) {
+            var date = new Date();
+            date.setTime(date.getTime() + minutes * 60 * 1000);
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
+    }
+
+    function setCookieDays(name, value, days) {
+        var expires = "";
+        if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+            expires = "; expires=" + date.toUTCString();
+        }
+        document.cookie = name + "=" + (value || "") + expires + "; path=/";
     }
 
     function getCookie(name) {
         var nameEQ = name + "=";
-        var ca = document.cookie.split(';');
+        var ca = document.cookie.split(";");
         for (var i = 0; i < ca.length; i++) {
             var c = ca[i];
-            while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+            while (c.charAt(0) === " ") c = c.substring(1, c.length);
             if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
         }
         return null;
     }
 
+    // đăng ký tài khoản
+    $("#form_register").on("submit", function (event) {
+        event.preventDefault();
+        var fullname = $("#fullname").val();
+        var username = $("#username").val();
+        var password = $("#password").val();
+        var confirmpassword = $("#confirmpassword").val();
 
+        console.log(username);
 
-    function checklogin() {
-        if (getCookie('ga') != null) {
-            console.log(`${window.domain_frontend}index.html`);
-            // window.location.href = `${window.domain_frontend}index.html`
-        } else {
-            window.location.href = `${window.domain_frontend}login.html`
+        if (password != confirmpassword) {
+            toastr.error("Mật khẩu không trùng khớp!");
+            return 0;
         }
-    }
-    //
-    // checklogin();
-  })
+
+        try {
+            $.ajax({
+                url: `${window.domain_backend}/register`,
+                type: "POST",
+                contentType: "application/json", // Gửi dữ liệu dưới dạng JSON
+                data: JSON.stringify({
+                    username: username,
+                    fullname: fullname,
+                    password: password,
+                }),
+                success: function (response) {
+                    console.log(response);
+                    if (response.status_code === 201) {
+                        toastr.success("Đăng ký thành công!");
+                        window.location.href = `${window.domain_frontend}index.html`;
+                    }
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("Tài khoản hoặc mật khẩu không đúng!");
+                },
+            });
+        } catch (e) {
+            toastr.error("Tài khoản hoặc mật khẩu không đúng!");
+        }
+
+        function getCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+                if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+            }
+            return null;
+        }
+
+
+
+        function checklogin() {
+            if (getCookie('ga') != null) {
+                console.log(`${window.domain_frontend}index.html`);
+                // window.location.href = `${window.domain_frontend}index.html`
+            } else {
+                window.location.href = `${window.domain_frontend}login.html`
+            }
+        }
+        //
+        // checklogin();
+    })
+
+    // hiển thị model địa chỉ nhận hàng
+    $('.list-group-item-action').on('click', function () {
+        var address = $(this).data('address');
+        $('#selected-address span').text(address);
+        $('#addressModal').modal('hide');
+    });
 })

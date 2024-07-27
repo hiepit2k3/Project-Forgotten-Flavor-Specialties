@@ -119,11 +119,11 @@
 
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Cart</h1>
+        <h1 class="text-center text-white display-6">Giỏ hàng</h1>
         <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Cart</li>
+            <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="#">Trang</a></li>
+            <li class="breadcrumb-item active text-white">Giỏ hàng</li>
         </ol>
     </div>
     <!-- Single Page Header End -->
@@ -131,172 +131,164 @@
 
     <!-- Cart Page Start -->
     <div class="container-fluid py-5">
-        <div class="container py-5">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Products</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Price</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Handle</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">
-                                <div class="d-flex align-items-center">
-                                    <img src="img/vegetable-item-3.png" class="img-fluid me-5 rounded-circle"
-                                        style="width: 80px; height: 80px;" alt="">
-                                </div>
-                            </th>
-                            <td>
-                                <p class="mb-0 mt-4">Big Banana</p>
-                            </td>
-                            <td>
-                                <p class="mb-0 mt-4">2.99 $</p>
-                            </td>
-                            <td>
-                                <div class="input-group quantity mt-4" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm text-center border-0"
-                                        value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="mb-0 mt-4">2.99 $</p>
-                            </td>
-                            <td>
-                                <button class="btn btn-md rounded-circle bg-light border mt-4">
-                                    <i class="fa fa-times text-danger"></i>
-                                </button>
-                            </td>
+        <section class="h-100 gradient-custom">
+            <div class="container py-5">
+                <div class="row d-flex justify-content-center my-4">
+                    <div class="col-md-8">
+                        <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <h5 class="mb-0">Sản phẩm trong giỏ hàng</h5>
+                            </div>
+                            <div class="card-body" id="cart-items">
+                                <!-- Single item -->
+                                <!-- Single item -->
+                            </div>
+                        </div>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <p><strong>Thời gian giao hàng dự kiến</strong></p>
+                                <p class="mb-0">12.10.2020 - 14.10.2020</p>
+                            </div>
+                        </div>
+                        <div class="card mb-4 mb-lg-0">
+                            <div class="card-body">
+                                <p><strong>We accept</strong></p>
+                                <img class="me-2" width="45px"
+                                    src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/visa.svg"
+                                    alt="Visa" />
+                                <img class="me-2" width="45px"
+                                    src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/amex.svg"
+                                    alt="American Express" />
+                                <img class="me-2" width="45px"
+                                    src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce-gateway-stripe/assets/images/mastercard.svg"
+                                    alt="Mastercard" />
+                                <img class="me-2" width="45px"
+                                    src="https://mdbcdn.b-cdn.net/wp-content/plugins/woocommerce/includes/gateways/paypal/assets/images/paypal.webp"
+                                    alt="PayPal acceptance mark" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- Thẻ chọn địa chỉ giao hàng -->
+                        <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <h5 class="mb-0">Chọn địa chỉ giao hàng</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li id="selected-address"
+                                        class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                        <div>
+                                            <strong>Địa chỉ đã chọn</strong>
+                                        </div>
+                                        <span><strong>Chưa chọn địa chỉ</strong></span>
+                                    </li>
+                                </ul>
 
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <div class="d-flex align-items-center">
-                                    <img src="img/vegetable-item-5.jpg" class="img-fluid me-5 rounded-circle"
-                                        style="width: 80px; height: 80px;" alt="" alt="">
-                                </div>
-                            </th>
-                            <td>
-                                <p class="mb-0 mt-4">Potatoes</p>
-                            </td>
-                            <td>
-                                <p class="mb-0 mt-4">2.99 $</p>
-                            </td>
-                            <td>
-                                <div class="input-group quantity mt-4" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm text-center border-0"
-                                        value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="mb-0 mt-4">2.99 $</p>
-                            </td>
-                            <td>
-                                <button class="btn btn-md rounded-circle bg-light border mt-4">
-                                    <i class="fa fa-times text-danger"></i>
+                                <button type="button" class="btn btn-primary btn-lg btn-block" data-bs-toggle="modal"
+                                    data-bs-target="#addressModal">
+                                    Chọn địa chỉ giao hàng
                                 </button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th scope="row">
-                                <div class="d-flex align-items-center">
-                                    <img src="img/vegetable-item-2.jpg" class="img-fluid me-5 rounded-circle"
-                                        style="width: 80px; height: 80px;" alt="" alt="">
-                                </div>
-                            </th>
-                            <td>
-                                <p class="mb-0 mt-4">Awesome Brocoli</p>
-                            </td>
-                            <td>
-                                <p class="mb-0 mt-4">2.99 $</p>
-                            </td>
-                            <td>
-                                <div class="input-group quantity mt-4" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control form-control-sm text-center border-0"
-                                        value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <p class="mb-0 mt-4">2.99 $</p>
-                            </td>
-                            <td>
-                                <button class="btn btn-md rounded-circle bg-light border mt-4">
-                                    <i class="fa fa-times text-danger"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class="mt-5">
-                <input type="text" class="border-0 border-bottom rounded me-5 py-3 mb-4" placeholder="Coupon Code">
-                <button class="btn border-secondary rounded-pill px-4 py-3 text-primary" type="button">Apply
-                    Coupon</button>
-            </div>
-            <div class="row g-4 justify-content-end">
-                <div class="col-8"></div>
-                <div class="col-sm-8 col-md-7 col-lg-6 col-xl-4">
-                    <div class="bg-light rounded">
-                        <div class="p-4">
-                            <h1 class="display-6 mb-4">Cart <span class="fw-normal">Total</span></h1>
-                            <div class="d-flex justify-content-between mb-4">
-                                <h5 class="mb-0 me-4">Subtotal:</h5>
-                                <p class="mb-0">$96.00</p>
                             </div>
-                            <div class="d-flex justify-content-between">
-                                <h5 class="mb-0 me-4">Shipping</h5>
-                                <div class="">
-                                    <p class="mb-0">Flat rate: $3.00</p>
+                        </div>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="addressModal" tabindex="-1" aria-labelledby="addressModalLabel"
+                            aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="addressModalLabel">Chọn địa chỉ giao hàng</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul class="list-group">
+                                            <li class="list-group-item list-group-item-action"
+                                                data-address="Số 123, Đường A, Quận B, Thành phố C">Địa chỉ 1: Số 123,
+                                                Đường A, Quận B, Thành phố C</li>
+                                            <li class="list-group-item list-group-item-action"
+                                                data-address="Số 456, Đường X, Quận Y, Thành phố Z">Địa chỉ 2: Số 456,
+                                                Đường X, Quận Y, Thành phố Z</li>
+                                            <li class="list-group-item list-group-item-action"
+                                                data-address="Số 789, Đường M, Quận N, Thành phố O">Địa chỉ 3: Số 789,
+                                                Đường M, Quận N, Thành phố O</li>
+                                            <!-- Thêm nhiều địa chỉ khác tại đây -->
+                                        </ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Đóng</button>
+                                    </div>
                                 </div>
                             </div>
-                            <p class="mb-0 text-end">Shipping to Ukraine.</p>
                         </div>
-                        <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
-                            <h5 class="mb-0 ps-4 me-4">Total</h5>
-                            <p class="mb-0 pe-4">$99.00</p>
+                        <!-- kết thúc thẻ chọn địa chỉ giao hàng -->
+                        <!-- Payment Methods -->
+                        <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <h5 class="mb-0">Chọn phương thức thanh toán</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard"
+                                        value="creditCard">
+                                    <label class="form-check-label" for="creditCard">
+                                        <img src="path/to/credit-card-image.png" alt="Credit Card" class="img-fluid"
+                                            style="max-height: 50px;">
+                                        Trả tiền khi nhận hàng
+                                    </label>
+                                </div>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer"
+                                        value="bankTransfer">
+                                    <label class="form-check-label" for="bankTransfer">
+                                        <img src="path/to/bank-transfer-image.png" alt="Bank Transfer" class="img-fluid"
+                                            style="max-height: 50px;">
+                                        Chuyển khoản ngân hàng
+                                    </label>
+                                </div>
+                                <!-- Thêm nhiều phương thức thanh toán khác tại đây -->
+                            </div>
                         </div>
-                        <button
-                            class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4"
-                            type="button">Proceed Checkout</button>
+
+                        <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <h5 class="mb-0">Thanh toán</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                        Tiền sản phẩm
+                                        <span></span><strong id="total-price-product">vnd</strong>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                        Chi phí giao hàng
+                                        <span><strong>30.000 VND</strong></span>
+                                    </li>
+                                    <li
+                                        class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                        <div>
+                                            <strong>Tổng tiền</strong>
+                                            <strong>
+                                                <p class="mb-0">(Bao gồm phí VAT)</p>
+                                            </strong>
+                                        </div>
+                                        <span></span><strong id="total-price">vnd</strong>
+                                    </li>
+                                </ul>
+
+                                <button type="button" data-mdb-button-init data-mdb-ripple-init
+                                    class="btn btn-primary btn-lg btn-block">
+                                    Thanh toán ngay
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </div>
     <!-- Cart Page End -->
 
@@ -417,7 +409,10 @@
     <script src="lib/owlcarousel/owl.carousel.min.js"></script>
 
     <!-- Template Javascript -->
+    <script src="js/globals.js"></script>
+    <script src="js/base.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/cart.js"></script>
 </body>
 
 </html>

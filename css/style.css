@@ -179,10 +179,8 @@
 
 /*** Hero Header ***/
 .hero-header {
-  background: linear-gradient(
-      rgba(248, 223, 173, 0.1),
-      rgba(248, 223, 173, 0.1)
-    ),
+  background: linear-gradient(rgba(248, 223, 173, 0.1),
+      rgba(248, 223, 173, 0.1)),
     url(../img/hero-img.jpg);
   background-position: center center;
   background-repeat: no-repeat;
@@ -232,6 +230,7 @@
 }
 
 @media (min-width: 992px) {
+
   .hero-header,
   .page-header {
     margin-top: 152px !important;
@@ -239,6 +238,7 @@
 }
 
 @media (max-width: 992px) {
+
   .hero-header,
   .page-header {
     margin-top: 97px !important;
@@ -568,28 +568,33 @@
 .signup-link a {
   text-decoration: underline;
 }
+
 .login {
   max-width: 280px;
   background-color: #ffffff;
   border-radius: 5px;
 }
+
 .hader {
   text-align: center;
   font-size: 22px;
   font-weight: 700;
 }
+
 .hader p {
   text-align: center;
   font-size: 18px;
   font-weight: 400;
   color: #706b6b;
 }
+
 form {
   display: flex;
   flex-direction: column;
   gap: 15px;
   margin-top: 20px;
 }
+
 form input {
   height: 40px;
   outline: none;
@@ -598,19 +603,27 @@ form input {
   font-size: 15px;
   border-radius: 8px;
 }
+
 form input[type="submit"] {
   background-color: #81c408;
   color: #ffffff;
   font-size: 17px;
 }
+
 form span {
   text-align: center;
   font-size: 16px;
   padding-top: 10px;
   color: #706b6b;
 }
+
 form span a {
   text-decoration: none;
   color: rgba(36, 36, 207, 0.671);
   font-weight: 500;
+}
+
+.button-product {
+  flex-direction: row;
+  align-items: flex-start;
 }
