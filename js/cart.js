@@ -56,7 +56,7 @@ $(document).ready(function () {
                             </button>
 
                             <div class="form-outline">
-                                <input id="quantity-${product.id}" min="0" name="quantity" value="${product.quantity}" type="number" class="form-control quantity-input" data-id="${product.id}" />
+                                <input id="quantity-${product.id}" min="1" name="quantity" value="${product.quantity}" type="number" class="form-control quantity-input" data-id="${product.id}" />
                                 <label class="form-label" for="quantity-${product.id}">Số Lượng</label>
                             </div>
 
@@ -118,7 +118,7 @@ $(document).ready(function () {
         var quantityInput = $(`input[data-id=${productId}]`);
         var newQuantity = parseInt(quantityInput.val()) - 1;
 
-        if (newQuantity >= 0) {
+        if (newQuantity >= 1) {
             quantityInput.val(newQuantity);
             updateCart(productId, newQuantity);
         }
@@ -145,7 +145,7 @@ $(document).ready(function () {
     $(document).on('click', '.clickable-remove', function () {
         var productId = $(this).data('id');
         var cart = JSON.parse(localStorage.getItem('cart')) || [];
-
+        $('#total-product-in-cart').text(JSON.parse(localStorage.getItem('cart')).length - 1);
         // Tìm chỉ mục của sản phẩm cần xóa
         var productIndex = cart.findIndex(product => product.id === productId);
 

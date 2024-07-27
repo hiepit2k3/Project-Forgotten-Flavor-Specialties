@@ -111,7 +111,23 @@
         }
     });
 
+    function total_product_in_cart() {
+        if (getCookie('ga') == null) {
+            // Lấy dữ liệu từ localStorage
+            const cartData = localStorage.getItem('cart');
+            if (cartData) {
+                // Chuyển đổi dữ liệu từ JSON sang mảng JavaScript
+                const cart = JSON.parse(cartData);
 
+                // Đếm số lượng đối tượng trong giỏ hàng
+                const numberOfItems = cart.length;
+                console.log(numberOfItems);
+                $('#total-product-in-cart').text(numberOfItems)
+            } else {
+                $('#total-product-in-cart').text("0")
+            }
+        }
+    }
     // Modal Video
     $(document).ready(function () {
         var $videoSrc;
@@ -149,6 +165,19 @@
 
     // Product loading
     $(document).ready(function () {
+        // kiem tra login hay chua
+        if (checklogin()) {
+            $('#user-menu').hide();
+            $('#a-login').hide();
+            $('#a-register').hide();
+        } else {
+            $('#user-menu').show();
+            $('#a-login').show();
+            $('#a-register').show();
+        }
+        // check  số lượng sản phẩm trong giỏ hàng
+        total_product_in_cart()
+        // load product pages to the index.html
         let productList = $('#product-list');
         try {
             $.ajax({
@@ -196,10 +225,10 @@
         }
     });
 
+    // them san pham vao gio hang neu nguoi dung chua dang nhap thi luu vao local 
     $(document).ready(function () {
         $(document).on('click', '.clickable-addcart', function () {
             var productId = $(this).data('id');
-            console.log(productId);
             var product = {
                 id: productId,
                 name: $(this).closest('.fruite-item').find('h4').text(),
@@ -208,25 +237,39 @@
                 image: $(this).closest('.fruite-item').find('img').attr('src'),
                 quantity: 1
             };
+            if (getCookie('ga') == null) {
+                // Lấy giỏ hàng hiện tại từ Local Storage
+                var cart = JSON.parse(localStorage.getItem('cart')) || [];
 
-            // Lấy giỏ hàng hiện tại từ Local Storage
-            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+                // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
+                var existingProduct = cart.find(item => item.id == productId);
 
-            // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
-            var existingProduct = cart.find(item => item.id == productId);
+                if (existingProduct) {
+                    // Nếu sản phẩm đã tồn tại, tăng quantity lên 1
+                    existingProduct.quantity += 1;
+                } else {
+                    // Nếu sản phẩm chưa tồn tại, thêm sản phẩm vào giỏ hàng
+                    cart.push(product);
+                }
 
-            if (existingProduct) {
-                // Nếu sản phẩm đã tồn tại, tăng quantity lên 1
-                existingProduct.quantity += 1;
-                console.log("Product quantity updated:", existingProduct);
+                // Lưu giỏ hàng mới vào Local Storage
+                localStorage.setItem('cart', JSON.stringify(cart));
+                total_product_in_cart();
+                toastr.success("Thêm sản phẩm vào giỏ hàng thành công")
             } else {
-                // Nếu sản phẩm chưa tồn tại, thêm sản phẩm vào giỏ hàng
-                cart.push(product);
-                console.log("Product added to cart:", product);
+                $.ajax({
+                    url: `${window.domain_backend}/cart/add`,
+                    type: "POST",
+                    contentType: "application/json", // Gửi dữ liệu dưới dạng JSON
+                    data: JSON.stringify(product),
+                    success: function (response) {
+                        toastr.success("Thêm sản phẩm vào giỏ hàng thành công")
+                    },
+                    error: function (xhr, status, error) {
+                        toastr.error("Không có dữ liệu!");
+                    },
+                });
             }
-
-            // Lưu giỏ hàng mới vào Local Storage
-            localStorage.setItem('cart', JSON.stringify(cart));
         });
     });
 
