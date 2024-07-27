@@ -627,3 +627,7 @@ form span a {
   flex-direction: row;
   align-items: flex-start;
 }
+
+.dropdown-toggle::after {
+  display: none;
+}

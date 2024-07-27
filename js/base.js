@@ -30,28 +30,6 @@ $(document).ready(function () {
         }
     });
 
-    function checklogin() {
-        if (getCookie("ga") != null) {
-            // Nếu không phải trang index.html thì chuyển hướng
-            if (window.location.pathname !== "/index.html") {
-                // Kiểm tra flag để ngăn chuyển hướng liên tục
-                if (!localStorage.getItem("redirectedToIndex")) {
-                    localStorage.setItem("redirectedToIndex", "true");
-                    window.location.href = `${window.domain_frontend}index.html`;
-                }
-            }
-        } else {
-            // Nếu không phải trang login.html thì chuyển hướng
-            if (window.location.pathname !== "/login.html") {
-                // Kiểm tra flag để ngăn chuyển hướng liên tục
-                if (!localStorage.getItem("redirectedToLogin")) {
-                    localStorage.setItem("redirectedToLogin", "true");
-                    window.location.href = `${window.domain_frontend}login.html`;
-                }
-            }
-        }
-    }
-
     // Function to set a cookie with an expiration time in minutes
     function setCookieMinutes(name, value, minutes) {
         var expires = "";
@@ -71,17 +49,6 @@ $(document).ready(function () {
             expires = "; expires=" + date.toUTCString();
         }
         document.cookie = name + "=" + (value || "") + expires + "; path=/";
-    }
-
-    function getCookie(name) {
-        var nameEQ = name + "=";
-        var ca = document.cookie.split(";");
-        for (var i = 0; i < ca.length; i++) {
-            var c = ca[i];
-            while (c.charAt(0) === " ") c = c.substring(1, c.length);
-            if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
-        }
-        return null;
     }
 
     // đăng ký tài khoản
@@ -156,3 +123,38 @@ $(document).ready(function () {
         $('#addressModal').modal('hide');
     });
 })
+
+function getCookie(name) {
+    var nameEQ = name + "=";
+    var ca = document.cookie.split(";");
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) === " ") c = c.substring(1, c.length);
+        if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+    }
+    return null;
+}
+
+function checklogin() {
+    if (getCookie("ga") != null) {
+        return true
+        // Nếu không phải trang index.html thì chuyển hướng
+        // if (window.location.pathname !== "/index.html") {
+        //     // Kiểm tra flag để ngăn chuyển hướng liên tục
+        //     if (!localStorage.getItem("redirectedToIndex")) {
+        //         localStorage.setItem("redirectedToIndex", "true");
+        //         window.location.href = `${window.domain_frontend}index.html`;
+        //     }
+        // }
+    } else {
+        return false
+        // Nếu không phải trang login.html thì chuyển hướng
+        // if (window.location.pathname !== "/login.html") {
+        //     // Kiểm tra flag để ngăn chuyển hướng liên tục
+        //     if (!localStorage.getItem("redirectedToLogin")) {
+        //         localStorage.setItem("redirectedToLogin", "true");
+        //         window.location.href = `${window.domain_frontend}login.html`;
+        //     }
+        // }
+    }
+}
