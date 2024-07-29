@@ -214,19 +214,19 @@
         $(document).on('click', '.clickable-addcart', function () {
             var productId = $(this).data('id');
             var product = {
-                id: productId,
                 name: $(this).closest('.fruite-item').find('h4').text(),
                 description: $(this).closest('.fruite-item').find('p').first().text(),
                 price: $(this).closest('.fruite-item').find('.fs-5').text().replace('$', '').replace(' / kg', ''),
                 image: $(this).closest('.fruite-item').find('img').attr('src'),
-                quantity: 1
+                quantity: 1,
+                product_id: productId,
             };
             if (getCookie('ga') == null) {
                 // Lấy giỏ hàng hiện tại từ Local Storage
                 var cart = JSON.parse(localStorage.getItem('cart')) || [];
 
                 // Kiểm tra xem sản phẩm đã tồn tại trong giỏ hàng chưa
-                var existingProduct = cart.find(item => item.id == productId);
+                var existingProduct = cart.find(item => item.product_id == productId);
 
                 if (existingProduct) {
                     // Nếu sản phẩm đã tồn tại, tăng quantity lên 1
