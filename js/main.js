@@ -111,23 +111,6 @@
         }
     });
 
-    function total_product_in_cart() {
-        if (getCookie('ga') == null) {
-            // Lấy dữ liệu từ localStorage
-            const cartData = localStorage.getItem('cart');
-            if (cartData) {
-                // Chuyển đổi dữ liệu từ JSON sang mảng JavaScript
-                const cart = JSON.parse(cartData);
-
-                // Đếm số lượng đối tượng trong giỏ hàng
-                const numberOfItems = cart.length;
-                console.log(numberOfItems);
-                $('#total-product-in-cart').text(numberOfItems)
-            } else {
-                $('#total-product-in-cart').text("0")
-            }
-        }
-    }
     // Modal Video
     $(document).ready(function () {
         var $videoSrc;
@@ -167,11 +150,11 @@
     $(document).ready(function () {
         // kiem tra login hay chua
         if (checklogin()) {
-            $('#user-menu').hide();
+            $('#user-menu').show();
             $('#a-login').hide();
             $('#a-register').hide();
         } else {
-            $('#user-menu').show();
+            $('#user-menu').hide();
             $('#a-login').show();
             $('#a-register').show();
         }
@@ -227,6 +210,7 @@
 
     // them san pham vao gio hang neu nguoi dung chua dang nhap thi luu vao local 
     $(document).ready(function () {
+        var token = getCookie('ga')
         $(document).on('click', '.clickable-addcart', function () {
             var productId = $(this).data('id');
             var product = {
@@ -260,9 +244,13 @@
                 $.ajax({
                     url: `${window.domain_backend}/cart/add`,
                     type: "POST",
-                    contentType: "application/json", // Gửi dữ liệu dưới dạng JSON
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
                     data: JSON.stringify(product),
                     success: function (response) {
+                        total_product_in_cart()
                         toastr.success("Thêm sản phẩm vào giỏ hàng thành công")
                     },
                     error: function (xhr, status, error) {
@@ -278,3 +266,33 @@
 
 })(jQuery);
 
+function total_product_in_cart() {
+    if (getCookie('ga') == null) {
+        // Lấy dữ liệu từ localStorage
+        const cartData = localStorage.getItem('cart');
+        if (cartData) {
+            // Chuyển đổi dữ liệu từ JSON sang mảng JavaScript
+            const cart = JSON.parse(cartData);
+
+            // Đếm số lượng đối tượng trong giỏ hàng
+            const numberOfItems = cart.length;
+            console.log(numberOfItems);
+            $('#total-product-in-cart').text(numberOfItems)
+        } else {
+            $('#total-product-in-cart').text("0")
+        }
+    } else {
+        var token = getCookie('ga')
+        $.ajax({
+            url: `${window.domain_backend}/cart/total-cart`,
+            type: "GET",
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            success: function (response) {
+                let total = response.data.total_cart;
+                $('#total-product-in-cart').text(total)
+            }
+        });
+    }
+}
