@@ -171,7 +171,7 @@ $(document).ready(function () {
                         $('#cart-items').empty();
                         load_data_cart(data_cart);
                         toastr.success('Xóa sản phẩm thành công');
-                        // renderCart();
+                        renderCart();
                     }
                 },
                 error: function (xhr, status, error) {
