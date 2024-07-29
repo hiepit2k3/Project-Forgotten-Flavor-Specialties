@@ -33,7 +33,8 @@ $(document).ready(function () {
                         }
                     },
                     error: function (xhr, status, error) {
-                        toastr.error(error);
+                        $('#cart-items').append('<p>Giỏ hàng trống</p>');
+                        return;
                     },
                 });
             } catch (e) {
