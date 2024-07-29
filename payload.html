@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Payment</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        img {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Thanh Toán Bằng QR Code</h1>
+    <form id="payment-form">
+        <label for="amount">Số tiền (VND):</label>
+        <input type="number" id="amount" name="amount" required>
+        <button type="submit">Tạo QR Code</button>
+    </form>
+    <div id="qr-code-container"></div>
+
+    <script>
+        document.getElementById('payment-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const amount = document.getElementById('amount').value;
+
+            fetch('/generate_qr', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ amount: parseFloat(amount) })
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const img = document.createElement('img');
+                img.src = URL.createObjectURL(blob);
+                document.getElementById('qr-code-container').innerHTML = '';  // Clear previous QR code
+                document.getElementById('qr-code-container').appendChild(img);
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

@@ -243,5 +243,17 @@ $(document).ready(function () {
         removeProduct(productId);
     });
 
+    function payment_and_order(cart){
+        let amount = $('#total-price').text();
+        // Lấy giá trị của ô radio đã chọn
+        let payment_method_id = $('input[name="paymentMethod"]:checked').val();
+        console.log(amount);
+        console.log(payment_method_id);
+    }
+
+    $(document).on('click', '#send_order', function () {
+        payment_and_order(data_cart);
+    });
+
     renderCart();
 });
