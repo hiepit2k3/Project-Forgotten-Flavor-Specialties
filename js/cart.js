@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var data_cart;
+    var data_cart ;
     function formatNumberWithDots(number) {
         let numStr = number.toString();
         let parts = numStr.split('.');
@@ -40,15 +40,15 @@ $(document).ready(function () {
                 toastr.error(e);
             }
         } else {
-            var cart = JSON.parse(localStorage.getItem('cart')) || [];
+            data_cart = JSON.parse(localStorage.getItem('cart')) || [];
             $('#cart-items').empty();
-            if (cart.length === 0) {
+            if (data_cart.length === 0) {
                 $('#cart-items').append('<p>Giỏ hàng trống</p>');
                 return;
             }
-            load_data_cart(cart);
-            var totalPriceProduct = calculateTotal(cart);
-            var totalPrice = calculateTotal(cart) + 30000;
+            load_data_cart(data_cart);
+            var totalPriceProduct = calculateTotal(data_cart);
+            var totalPrice = calculateTotal(data_cart) + 30000;
             $('#total-price-product').text(formatNumberWithDots(totalPriceProduct) + ' VND');
             $('#total-price').text(formatNumberWithDots(totalPrice) + ' VND');
         }
@@ -189,6 +189,9 @@ $(document).ready(function () {
     }
 
     function updateQuantityInCart(productId, newQuantity) {
+        console.log(productId)
+        console.log(newQuantity)
+        console.log(data_cart)
         var product = data_cart.find(product => product.id === productId);
         if (product) {
             product.quantity = newQuantity;
