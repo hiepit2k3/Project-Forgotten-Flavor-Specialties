@@ -18,7 +18,7 @@ $(document).ready(function () {
           if (response.status_code === 200) {
             toastr.success("Đăng nhập thành công!");
             setCookieMinutes("ga", response.data.access_token, 15);
-            window.location.href = `${window.domain_frontend}/index`;
+            window.location.href = `${window.domain_frontend}/index.html`;
           }
         },
         error: function (xhr, status, error) {
@@ -80,7 +80,7 @@ $(document).ready(function () {
           console.log(response);
           if (response.status_code === 201) {
             toastr.success("Đăng ký thành công!");
-            window.location.href = `${window.domain_frontend}`;
+            window.location.href = `${window.domain_frontend}/index.html`;
           }
         },
         error: function (xhr, status, error) {
@@ -108,7 +108,7 @@ $(document).ready(function () {
         console.log(`${window.domain_frontend}index.html`);
         // window.location.href = `${window.domain_frontend}index.html`
       } else {
-        window.location.href = `${window.domain_frontend}/login`;
+        window.location.href = `${window.domain_frontend}/login.htm`;
       }
     }
     //
