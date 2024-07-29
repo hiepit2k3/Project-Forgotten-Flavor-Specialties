@@ -163,16 +163,11 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.status_code === 200) {
                         total_product_in_cart()
-                        var index = data_cart.findIndex(product => product.product_id === productId);
-
-                        // Nếu phần tử tồn tại trong mảng, xóa nó
-                        if (index !== -1) {
-                            data_cart.splice(index, 1);
-                        }
                         $('#cart-items').empty();
                         load_data_cart(data_cart);
+                        console.log("data sau khi xoa voi api",data_cart);
                         toastr.success('Xóa sản phẩm thành công');
-                        renderCart();
+                        // renderCart();
                     }
                 },
                 error: function (xhr, status, error) {
@@ -180,14 +175,12 @@ $(document).ready(function () {
                 }
             });
         } else {
-            // var cart = JSON.parse(localStorage.getItem('cart')) || [];
-            console.log("xóa", productId);
-            renderCart();
+            toastr.error('Có lỗi xảy ra khi xóa sản phẩm');
         }
     }
 
     function updateQuantityInCart(productId, newQuantity) {
-        var product = data_cart.find(product => product.product_id === productId);
+        var product = data_cart.find(product => product.product_id == productId);
         if (product) {
             product.quantity = newQuantity;
         }
@@ -195,12 +188,13 @@ $(document).ready(function () {
 
     function removeProductById(id) {
         var index = data_cart.findIndex(product => product.product_id === id);
-        if (index !== -1) {
+        if (index === -1) {
             data_cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(data_cart));
+            console.log("data sau khi xoa voi js",data_cart);
         }
         total_product_in_cart()
-        renderCart();
+        // load_data_cart(data_cart)
     }
 
     $(document).on('click', '.step-down', function () {
