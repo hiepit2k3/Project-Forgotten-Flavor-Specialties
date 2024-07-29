@@ -196,11 +196,11 @@ $(document).ready(function () {
     function removeProductById(id) {
         var index = data_cart.findIndex(product => product.product_id === id);
         if (index !== -1) {
-            console.log("da xoa");
             data_cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(data_cart));
         }
         total_product_in_cart()
+        renderCart();
     }
 
     $(document).on('click', '.step-down', function () {
@@ -241,7 +241,6 @@ $(document).ready(function () {
 
     $(document).on('click', '.clickable-remove', function () {
         var productId = $(this).data('id');
-        console.log(productId);
         removeProductById(productId)
         var totalPriceProduct = calculateTotal(data_cart);
         var totalPrice = calculateTotal(data_cart) + 30000;
