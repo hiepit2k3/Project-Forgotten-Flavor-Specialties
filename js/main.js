@@ -215,7 +215,7 @@
             var productId = $(this).data('id');
             var product = {
                 name: $(this).closest('.fruite-item').find('h4').text(),
-                description: $(this).closest('.fruite-item').find('p').first().text(),
+                // description: $(this).closest('.fruite-item').find('p').first().text(),
                 price: $(this).closest('.fruite-item').find('.fs-5').text().replace('$', '').replace(' / kg', ''),
                 image: $(this).closest('.fruite-item').find('img').attr('src'),
                 quantity: 1,

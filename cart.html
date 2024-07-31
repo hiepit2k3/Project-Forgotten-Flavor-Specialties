@@ -214,8 +214,8 @@
                                             aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <ul class="list-group">
-                                            <li class="list-group-item list-group-item-action"
+                                        <ul class="list-group" id="item-shipping-address">
+                                            <!-- <li class="list-group-item list-group-item-action"
                                                 data-address="Số 123, Đường A, Quận B, Thành phố C">Địa chỉ 1: Số 123,
                                                 Đường A, Quận B, Thành phố C</li>
                                             <li class="list-group-item list-group-item-action"
@@ -223,7 +223,7 @@
                                                 Đường X, Quận Y, Thành phố Z</li>
                                             <li class="list-group-item list-group-item-action"
                                                 data-address="Số 789, Đường M, Quận N, Thành phố O">Địa chỉ 3: Số 789,
-                                                Đường M, Quận N, Thành phố O</li>
+                                                Đường M, Quận N, Thành phố O</li> -->
                                             <!-- Thêm nhiều địa chỉ khác tại đây -->
                                         </ul>
                                     </div>
@@ -240,25 +240,7 @@
                             <div class="card-header py-3">
                                 <h5 class="mb-0">Chọn phương thức thanh toán</h5>
                             </div>
-                            <div class="card-body">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard"
-                                        value="creditCard">
-                                    <label class="form-check-label" for="creditCard">
-                                        <img src="path/to/credit-card-image.png" alt="Credit Card" class="img-fluid"
-                                            style="max-height: 50px;">
-                                        Trả tiền khi nhận hàng
-                                    </label>
-                                </div>
-                                <div class="form-check mt-2">
-                                    <input class="form-check-input" type="radio" name="paymentMethod" id="bankTransfer"
-                                        value="bankTransfer">
-                                    <label class="form-check-label" for="bankTransfer">
-                                        <img src="path/to/bank-transfer-image.png" alt="Bank Transfer" class="img-fluid"
-                                            style="max-height: 50px;">
-                                        Chuyển khoản ngân hàng
-                                    </label>
-                                </div>
+                            <div class="card-body" id="payment-methods">
                                 <!-- Thêm nhiều phương thức thanh toán khác tại đây -->
                             </div>
                         </div>
