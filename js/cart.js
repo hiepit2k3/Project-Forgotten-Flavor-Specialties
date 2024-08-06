@@ -1,6 +1,7 @@
 $(document).ready(function () {
     var data_cart;
-    var shipping_id;
+    var shipping_address;
+    var data_shipping_to_api;
     function formatNumberWithDots(number) {
         let numStr = number.toString();
         let parts = numStr.split('.');
@@ -69,7 +70,8 @@ $(document).ready(function () {
                     success: function (response) {
                         console.log(response);
                         if (response.status_code === 200) {
-                            load_data_shipping(response.data);
+                            data_shipping_to_api = response.data;
+                            load_data_shipping(data_shipping_to_api);
                         }
                     },
                     error: function (xhr, status, error) {
@@ -210,7 +212,6 @@ $(document).ready(function () {
                 }
             });
         } else {
-            // var cart = JSON.parse(localStorage.getItem('cart')) || [];
             var product = data_cart.find(data => data.product_id === productId);
             if (product) {
                 product.quantity = newQuantity;
@@ -248,8 +249,6 @@ $(document).ready(function () {
                     toastr.error('Có lỗi xảy ra khi xóa sản phẩm');
                 }
             });
-        } else {
-            toastr.error('Có lỗi xảy ra khi xóa sản phẩm');
         }
     }
 
@@ -262,16 +261,22 @@ $(document).ready(function () {
 
     function removeProductById(id) {
         var index = data_cart.findIndex(product => product.product_id === id);
-        if (index === -1) {
+        if (index !== -1) {
             data_cart.splice(index, 1);
             localStorage.setItem('cart', JSON.stringify(data_cart));
-            console.log("data sau khi xoa voi js", data_cart);
+            $('#cart-items').empty();
+            load_data_cart(data_cart);
         }
         total_product_in_cart()
     }
 
     $(document).on('click', '.list-group-item-action', function () {
-        shipping_id = $(this).attr('id');
+        let id = $(this).attr('id');
+        console.log("id address choose", id);
+        shipping_address = data_shipping_to_api.find(item => item.id == id);
+        console.log(shipping_address);
+        $('#addressModal').modal('hide');
+        $('#selected-address-text').text(`${shipping_address.street_address}, ${shipping_address.ward}, ${shipping_address.district}, ${shipping_address.city}`);
     });
 
     $(document).on('click', '.step-down', function () {
@@ -324,7 +329,7 @@ $(document).ready(function () {
         let amount = calculateTotal(data_cart) + 30000;
         // Lấy giá trị của ô radio đã chọn
         let payment_method_id = $('input[name="paymentMethod"]:checked').val();
-        let shipping_id = shipping_id
+        let shipping_id = shipping_address.id
         let product_list = data_cart;
         var token = getCookie('ga');
         try {
@@ -346,6 +351,10 @@ $(document).ready(function () {
                 success: function (response) {
                     console.log(response);
                     if (response.status_code === 200) {
+                        window.location.href = response.data.payment_url;
+                    }
+                    else if(response.status_code === 201){
+                        
                     }
                 },
                 error: function (xhr, status, error) {
