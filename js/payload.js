@@ -32,6 +32,7 @@ $(document).ready(function () {
                 }
             }
             // Kiểm tra mã đơn hàng
+            console.log("ma don hang",params.code_order);
             const transactionExists = await verifyTransaction(params.code_order);
             if (transactionExists) {
                 if (params.status_order === '00') {
