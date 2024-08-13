@@ -199,24 +199,8 @@ function total_product_in_cart() {
 function checklogin() {
     if (getCookie("ga") != null) {
         return true;
-        // Nếu không phải trang index.html thì chuyển hướng
-        // if (window.location.pathname !== "/index.html") {
-        //     // Kiểm tra flag để ngăn chuyển hướng liên tục
-        //     if (!localStorage.getItem("redirectedToIndex")) {
-        //         localStorage.setItem("redirectedToIndex", "true");
-        //         window.location.href = `${window.domain_frontend}index.html`;
-        //     }
-        // }
     } else {
         return false;
-        // Nếu không phải trang login.html thì chuyển hướng
-        // if (window.location.pathname !== "/login.html") {
-        //     // Kiểm tra flag để ngăn chuyển hướng liên tục
-        //     if (!localStorage.getItem("redirectedToLogin")) {
-        //         localStorage.setItem("redirectedToLogin", "true");
-        //         window.location.href = `${window.domain_frontend}login.html`;
-        //     }
-        // }
     }
 }
 
@@ -229,4 +213,25 @@ function getCookie(name) {
         if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
     }
     return null;
+}
+
+function checkLocal() {
+    var token = getCookie('ga')
+    const cartData = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cartData != null) {
+        $.ajax({
+            url: `${window.domain_backend}/cart/add`,
+            type: "POST",
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(cartData),
+            success: function (response) {
+            },
+            error: function (xhr, status, error) {
+                toastr.error("Không có dữ liệu!");
+            },
+        });
+    }
 }

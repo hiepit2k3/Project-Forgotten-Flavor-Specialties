@@ -18,7 +18,9 @@ $(document).ready(function () {
           if (response.status_code === 200) {
             toastr.success("Đăng nhập thành công!");
             setCookieMinutes("ga", response.data.access_token, 15);
+            checkLocal()
             window.location.href = '/index';
+            localStorage.removeItem("cart");
           }
         },
         error: function (xhr, status, error) {
@@ -30,16 +32,7 @@ $(document).ready(function () {
     }
   });
 
-  // Function to set a cookie with an expiration time in minutes
-  function setCookieMinutes(name, value, minutes) {
-    var expires = "";
-    if (minutes) {
-      var date = new Date();
-      date.setTime(date.getTime() + minutes * 60 * 1000);
-      expires = "; expires=" + date.toUTCString();
-    }
-    document.cookie = name + "=" + (value || "") + expires + "; path=/";
-  }
+
 
   function setCookieDays(name, value, days) {
     var expires = "";
@@ -81,6 +74,7 @@ $(document).ready(function () {
           if (response.status_code === 201) {
             toastr.success("Đăng ký thành công!");
             window.location.href = '/index.html';
+            checkLocal()
           }
         },
         error: function (xhr, status, error) {
@@ -122,3 +116,14 @@ $(document).ready(function () {
     $("#addressModal").modal("hide");
   });
 });
+
+// Function to set a cookie with an expiration time in minutes
+function setCookieMinutes(name, value, minutes) {
+  var expires = "";
+  if (minutes) {
+    var date = new Date();
+    date.setTime(date.getTime() + minutes * 60 * 1000);
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}

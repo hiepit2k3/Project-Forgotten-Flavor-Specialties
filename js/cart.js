@@ -349,12 +349,13 @@ $(document).ready(function () {
                     order_details: product_list
                 }),
                 success: function (response) {
-                    console.log(response);
+                    // console.log(response);
                     if (response.status_code === 200) {
                         window.location.href = response.data.payment_url;
                     }
-                    else if(response.status_code === 201){
-                        
+                    else if (response.status_code === 201) {
+                        setCookieMinutes('data', response.data.order, 3);
+                        window.location.href = response.data.url;
                     }
                 },
                 error: function (xhr, status, error) {
@@ -368,6 +369,8 @@ $(document).ready(function () {
     }
 
     $(document).on('click', '#send_order', function () {
+        $('#spinner').show();
+        $(this).prop('disabled', true).text('Đang xử lý...');
         payment_and_order(data_cart);
     });
 
