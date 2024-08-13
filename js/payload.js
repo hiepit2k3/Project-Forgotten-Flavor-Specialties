@@ -15,12 +15,13 @@ $(document).ready(function () {
             async function verifyTransaction(txnRef) {
                 try {
                     const response = await $.ajax({
-                        url: `${window.domain_backend}/order/check-order/${txnRef}`, // Thay bằng endpoint kiểm tra của bạn
+                        url: `${window.domain_backend}/order/check-order/${txnRef}`,
                         type: 'GET',
                         headers: {
                             'Authorization': `Bearer ${token}`,
                             'Content-Type': 'application/json'
                         },
+                        timeout: 5000  // thời gian chờ là 5 giây
                     });
                     if (response.data === true) {
                         return true;
