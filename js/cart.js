@@ -58,8 +58,8 @@ $(document).ready(function () {
     }
 
     function data_shipping_address() {
-        var token = getCookie('ga');
         if (checklogin()) {
+            var token = getCookie('ga');
             try {
                 $.ajax({
                     url: `${window.domain_backend}/shipping-address`,
@@ -83,6 +83,7 @@ $(document).ready(function () {
                 toastr.error(e);
             }
         } else {
+            $('#item-shipping-address').append('<p>Vui lòng đăng nhập trước</p>');
         }
     }
 
@@ -143,8 +144,7 @@ $(document).ready(function () {
                 </div>
                 <div class="col-lg-5 col-md-6 mb-4 mb-lg-0">
                     <p><strong>${product.name}</strong></p>
-                    <p>Color: ${product.color}</p>
-                    <p>Size: ${product.size}</p>
+                    <p><strong>Trọng lượng trung bình: ${product.average_weight} Kg</strong></p>
                     <button type="button" data-id="${product.product_id}" class="clickable-remove btn btn-primary btn-sm me-1 mb-2" data-mdb-tooltip-init title="Remove item">
                         <i class="fas fa-trash"></i>
                     </button>
@@ -203,8 +203,6 @@ $(document).ready(function () {
                         var totalPrice = calculateTotal(data_cart) + 30000;
                         $('#total-price-product').text(formatNumberWithDots(totalPriceProduct) + ' VND');
                         $('#total-price').text(formatNumberWithDots(totalPrice) + ' VND');
-                        // toastr.success('Cập nhật giỏ hàng thành công');
-                        // renderCart();
                     }
                 },
                 error: function (xhr, status, error) {
@@ -240,9 +238,7 @@ $(document).ready(function () {
                         total_product_in_cart()
                         $('#cart-items').empty();
                         load_data_cart(data_cart);
-                        console.log("data sau khi xoa voi api", data_cart);
                         toastr.success('Xóa sản phẩm thành công');
-                        // renderCart();
                     }
                 },
                 error: function (xhr, status, error) {
@@ -272,7 +268,6 @@ $(document).ready(function () {
 
     $(document).on('click', '.list-group-item-action', function () {
         let id = $(this).attr('id');
-        console.log("id address choose", id);
         shipping_address = data_shipping_to_api.find(item => item.id == id);
         console.log(shipping_address);
         $('#addressModal').modal('hide');
@@ -329,8 +324,20 @@ $(document).ready(function () {
         let amount = calculateTotal(data_cart) + 30000;
         // Lấy giá trị của ô radio đã chọn
         let payment_method_id = $('input[name="paymentMethod"]:checked').val();
+        if (typeof shipping_address === 'undefined') {
+            $('#spinner').hide();
+            $('#send_order').removeAttr('disabled').text('Thanh toán ngay');
+            toastr.warning('Vui lòng chọn địa chỉ nhận hàng của bạn!');
+            return 0;
+        }
         let shipping_id = shipping_address.id
         let product_list = data_cart;
+        if (typeof payment_method_id === 'undefined') {
+            $('#spinner').hide();
+            $('#send_order').removeAttr('disabled').text('Thanh toán ngay');
+            toastr.warning('Vui lòng chọn phương thức thanh toán của bạn!');
+            return 0;
+        }
         var token = getCookie('ga');
         try {
             $.ajax({
@@ -354,11 +361,12 @@ $(document).ready(function () {
                         window.location.href = response.data.payment_url;
                     }
                     else if (response.status_code === 201) {
-                        setCookieMinutes('data', response.data.order, 3);
                         window.location.href = response.data.url;
                     }
                 },
                 error: function (xhr, status, error) {
+                    $('#spinner').hide();
+                    $(this).prop('disabled', true).text('Đang xử lý...');
                     $('#item-shipping-address').append('<p>Giỏ hàng trống</p>');
                     return;
                 },
