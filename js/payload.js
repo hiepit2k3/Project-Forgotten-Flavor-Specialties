@@ -7,7 +7,7 @@ $(document).ready(function () {
             try {
                 const response = await $.ajax({
                     url: `${window.domain_backend}/order/check-order/${txnRef}`, // Thay bằng endpoint kiểm tra của bạn
-                    type: 'GET',
+                    type: 'POST',
                     headers: {
                         'Authorization': `Bearer ${token}`
                     },
