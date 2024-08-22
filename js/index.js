@@ -1,4 +1,6 @@
-function load_data_product_index() {
+// them san pham vao gio hang neu nguoi dung chua dang nhap thi luu vao local 
+$(document).ready(function () {
+    var products;
     let productList = $('#product-list');
     try {
         $.ajax({
@@ -6,14 +8,15 @@ function load_data_product_index() {
             type: "GET",
             success: function (response) {
                 console.log(response.data.data_result);
-                let products = response.data.data_result;
+                products = response.data.data_result;
                 // Lặp qua các sản phẩm và thêm vào HTML
                 products.forEach(product => {
+                    let formattedPrice = formatPrice(product.price);
                     let productHTML = `
                     <div class="col-md-6 col-lg-4 col-xl-3">
                         <div class="rounded position-relative fruite-item">
                             <div class="fruite-img">
-                                <img src="${product.image}" class="img-fluid w-100 rounded-top" alt="">
+                                <img src="${product.image}" class="img-fluid w-100 rounded-top" alt="" style="  height:300px">
                             </div>
                             <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">
                                 Fruits
@@ -22,7 +25,7 @@ function load_data_product_index() {
                                 <h4>${product.name}</h4>
                                 <p>${product.description}</p>
                                 <div class="d-flex justify-content-between flex-lg-wrap">
-                                    <p class="text-dark fs-5 fw-bold mb-0">$${product.price} / kg</p>
+                                    <p class="text-dark fs-5 fw-bold mb-0">${formattedPrice} VND / kg</p>
                                     <button data-id="${product.id}" class="clickable-addcart btn border border-secondary rounded-pill px-3 text-primary">
 <i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart
 </button>
@@ -44,20 +47,23 @@ function load_data_product_index() {
     } catch (e) {
         toastr.error("Máy chủ bị lỗi!");
     }
-}
 
-// them san pham vao gio hang neu nguoi dung chua dang nhap thi luu vao local 
-$(document).ready(function () {
     var token = getCookie('ga')
     $(document).on('click', '.clickable-addcart', function () {
         var productId = $(this).data('id');
+        console.log(products);
+        var product_data = products.find(item => item.id === productId);
+
+        console.log(product_data);
+
         var product = {
-            name: $(this).closest('.fruite-item').find('h4').text(),
-            // description: $(this).closest('.fruite-item').find('p').first().text(),
-            price: $(this).closest('.fruite-item').find('.fs-5').text().replace('$', '').replace(' / kg', ''),
-            image: $(this).closest('.fruite-item').find('img').attr('src'),
+            name: product_data.name,
+            // description: $(this).closest('.fruite-item').find('p').first().text().trim(), // Đã kích hoạt lại nếu cần
+            price: product_data.price,
+            image: product_data.image,
+            average_weight: product_data.average_weight,
             quantity: 1,
-            product_id: productId,
+            product_id: productId
         };
         if (getCookie('ga') == null) {
             // Lấy giỏ hàng hiện tại từ Local Storage
@@ -79,6 +85,7 @@ $(document).ready(function () {
             total_product_in_cart();
             toastr.success("Thêm sản phẩm vào giỏ hàng thành công")
         } else {
+            alert(productId);
             $.ajax({
                 url: `${window.domain_backend}/cart/add`,
                 type: "POST",
@@ -97,7 +104,8 @@ $(document).ready(function () {
             });
         }
     });
-
-
-    load_data_product_index();
 });
+
+function formatPrice(price) {
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
