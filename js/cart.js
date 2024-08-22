@@ -366,7 +366,7 @@ $(document).ready(function () {
                 },
                 error: function (xhr, status, error) {
                     $('#spinner').hide();
-                    $(this).prop('disabled', true).text('Đang xử lý...');
+                    $('#send_order').removeAttr('disabled').text('Thanh toán ngay');
                     $('#item-shipping-address').append('<p>Giỏ hàng trống</p>');
                     return;
                 },
