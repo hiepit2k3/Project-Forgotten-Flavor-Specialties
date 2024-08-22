@@ -729,3 +729,9 @@ form span a {
     filter: hue-rotate(360deg);
   }
 }
+.nav-pills .nav-item {
+  flex: 1; /* Cho phép các phần tử con mở rộng đều */
+}
+.nav-pills .nav-link {
+  text-align: center; /* Căn giữa văn bản trong từng tab */
+}
