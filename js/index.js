@@ -85,7 +85,6 @@ $(document).ready(function () {
             total_product_in_cart();
             toastr.success("Thêm sản phẩm vào giỏ hàng thành công")
         } else {
-            alert(productId);
             $.ajax({
                 url: `${window.domain_backend}/cart/add`,
                 type: "POST",

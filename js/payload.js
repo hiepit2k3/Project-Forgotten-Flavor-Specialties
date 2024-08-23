@@ -7,7 +7,7 @@ $(document).ready(function () {
             try {
                 const response = await $.ajax({
                     url: `${window.domain_backend}/order/check-order/${txnRef}`, // Thay bằng endpoint kiểm tra của bạn
-                    type: 'POST',
+                    type: 'GET',
                     headers: {
                         'Authorization': `Bearer ${token}`
                     },
@@ -41,7 +41,7 @@ function deleteCookie(name) {
 }
 
 function load_data_payment(data) {
-    if (data.data.code_status == 0 || data.data.status_code == 1) {
+    if (data.data.code_status == 0 || data.data.code_status == 1) {
         var payment_success = `
             <div class="container d-flex flex-column justify-content-center align-items-center"
                         style="height: 50vh;">
